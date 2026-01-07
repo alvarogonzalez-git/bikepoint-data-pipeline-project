@@ -1,4 +1,5 @@
 data
+logs
 *.json
 
 # Byte-compiled / optimized / DLL files
