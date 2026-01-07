@@ -7,9 +7,9 @@ This project was completed as a part of The Information Lab's Data Engineering S
 * Load
 
 <p align="center">
-  <img src="tfl_logo.png" width="38%"/>
+  <img width="38%" alt="tfl logo" src="https://github.com/user-attachments/assets/4a711b29-8347-4f2f-bbfc-27a0f3932192" />
   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="santander_cycles_logo.png" width="38%" /> 
+  <img width="38%" alt="santander cycles logo" src="https://github.com/user-attachments/assets/564ded8a-68db-4b26-989d-97b9882f1fab" />
 </p>
 
 ---
