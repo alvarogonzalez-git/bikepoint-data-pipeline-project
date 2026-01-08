@@ -1,3 +1,9 @@
+<p align="center">
+  <img width="38%" alt="tfl logo" src="https://github.com/user-attachments/assets/4a711b29-8347-4f2f-bbfc-27a0f3932192" />
+  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <img width="38%" alt="santander cycles logo" src="https://github.com/user-attachments/assets/564ded8a-68db-4b26-989d-97b9882f1fab" />
+</p>
+
 #  BikePoint Data Pipeline
 
 This project was completed as a part of The Information Lab's Data Engineering School. It was incrementally developed on a weekly basis by applying the core skills that correspond to the main stages in the Data Engineering lifecycle: Extract, Transform and Load (ETL). The data for this project comes from [Transport for London's (TfL) Unified API](https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll).
@@ -5,12 +11,6 @@ This project was completed as a part of The Information Lab's Data Engineering S
 * Extract - ingesting data via API call in python script 🐍
 * Transform
 * Load
-
-<p align="center">
-  <img width="38%" alt="tfl logo" src="https://github.com/user-attachments/assets/4a711b29-8347-4f2f-bbfc-27a0f3932192" />
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-  <img width="38%" alt="santander cycles logo" src="https://github.com/user-attachments/assets/564ded8a-68db-4b26-989d-97b9882f1fab" />
-</p>
 
 ---
 
