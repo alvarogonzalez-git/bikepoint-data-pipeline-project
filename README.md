@@ -8,7 +8,7 @@
   <h1>BikePoint Data Pipeline</h1>
 
   <p>
-    <strong>A robust ETL pipeline ingesting data from Transport for London (TfL).</strong>
+    <strong>A robust ELT pipeline ingesting data from Transport for London (TfL).</strong>
   </p>
 </div>
 
