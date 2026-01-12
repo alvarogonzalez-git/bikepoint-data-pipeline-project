@@ -15,7 +15,7 @@
 <hr />
 
 <p>
-  This project was developed as part of <strong>The Information Lab's Data Engineering School</strong>. It implements a robust ETL (Extract, Transform, Load) pipeline to ingest real-time data from <a href="https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll">Transport for London's (TfL) Unified API</a> regarding Santander Cycles and store it securely in the cloud.
+  This project was developed as part of <strong>The Information Lab's Data Engineering School</strong>. It implements a robust ELT (Extract, Load, Transform) pipeline to ingest real-time data from <a href="https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll">Transport for London's (TfL) Unified API</a> regarding Santander Cycles and store it securely in the cloud.
 </p>
 
 <p>
