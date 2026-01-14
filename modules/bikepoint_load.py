@@ -43,6 +43,9 @@ def load_function(data_dir, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME, log
             if os.path.isfile(full_path):
                 file_list.append(item)
 
+        # file_count initialized for dynamic logging
+        file_count = 0
+
         for filename in file_list:
             # Recreate the full path relative to the script for upload loop
             full_path = os.path.join(data_dir, filename)
@@ -54,15 +57,21 @@ def load_function(data_dir, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME, log
                     # 3. Name of the file you want to upload
                 s3_client.upload_file(full_path, AWS_BUCKET_NAME, filename)
                 print(f"Uploaded {filename}")
-                logger.info(f"Uploaded and deleted local copy: {filename}") 
+                logger.info(f"Uploaded {filename}") 
                 
                 # Delete the local file ONLY if the line above succeeds
                 os.remove(full_path)
-                print(f"Uploaded and deleted local copy: {filename}")
-                logger.info(f"Uploaded and deleted local copy: {filename}")
+                print(f"Deleted local copy of file: {filename}")
+                logger.info(f"Deleted local copy of file: {filename}")
 
+                # Increase file_count by 1
+                file_count += 1
                 
             except Exception as e:
                 # If upload fails, the code jumps here, and the file is NOT deleted
                 print(f"Failed to upload {filename}: {e}")
-                logger.error(f"Failed to upload {filename}: {e}") 
+                logger.error(f"Failed to upload {filename}: {e}")
+        
+        print(f"All done! {file_count} files have been uploaded to S3 bucket: {AWS_BUCKET_NAME}")
+        logger.info(f"All done! {file_count} files have been uploaded to S3 bucket: {AWS_BUCKET_NAME}")
+

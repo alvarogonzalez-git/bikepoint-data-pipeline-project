@@ -5,14 +5,12 @@ from modules.bikepoint_load import load_function
 from datetime import datetime
 from dotenv import load_dotenv
 import os
-from pathlib import Path
 
 # Define Runtime timestamp
 timestamp = datetime.now().strftime('%Y-%m-%d %H-%M-%S')
 
 # Documentation here: https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll
 url = 'https://api.tfl.gov.uk//BikePoint'
-
 
 # Load .env file
 load_dotenv()
