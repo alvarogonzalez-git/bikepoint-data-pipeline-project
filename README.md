@@ -33,11 +33,11 @@
     <li><code>load.py</code> -  this python module script checks for local data, authenticates with AWS, uploads files to an S3 bucket, and cleans up local storage upon success.</li>
   </ul>
 
-  <li><strong>Warehousing - Snowflake ❄️:</strong>
+  <li><strong>Warehousing - Snowflake ❄️</strong>
   <ul>
     <li><i>Coming soon - loading to Snowflake...</i></li>
   </ul>
-  <li><strong>Transform with dbt Plaform 🔶:</strong>
+  <li><strong>Transform with dbt Plaform 🔶</strong>
   <ul>
     <li><i>Coming soon - transformation with dbt...</i></li>
   </ul>
