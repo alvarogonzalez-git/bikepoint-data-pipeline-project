@@ -1,9 +1,13 @@
 # Import libraries
 import os
 import boto3
+import logging
+
+# Activate logger and assign name using .py filename
+logger = logging.getLogger(__name__)
 
 # Defining function to load .json data to S3 bucket
-def load_function(data_dir, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME, logger):
+def load_function(data_dir, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME):
     '''
     Loads .json files from data_dir to S3 bucket.
     
@@ -23,11 +27,11 @@ def load_function(data_dir, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME, log
 
     # Checks if folder is empty
     if len(os.listdir(data_dir)) == 0:
-        print(f"The '{data_dir}' folder is empty.")
-        logger.info(f"The '{data_dir}' folder is empty.") 
+        print(f'The "{data_dir}" folder is empty.')
+        logger.info(f'The "{data_dir}" folder is empty.') 
 
     else:
-        print("The folder contains files.")
+        print('The folder contains files.')
 
         # os.listdir returns everything in the folder (files and folders)
         all_items = os.listdir(data_dir)
@@ -42,6 +46,8 @@ def load_function(data_dir, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME, log
             # If file exists, append to the empty list
             if os.path.isfile(full_path):
                 file_list.append(item)
+                print(f'{item} added to file upload list.') 
+                logger.info(f'{item} added to file upload list.') 
 
         # file_count initialized for dynamic logging
         file_count = 0
@@ -56,8 +62,9 @@ def load_function(data_dir, AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME, log
                     # 2. s3 bucket name
                     # 3. Name of the file you want to upload
                 s3_client.upload_file(full_path, AWS_BUCKET_NAME, filename)
-                print(f"Uploaded {filename}")
-                logger.info(f"Uploaded {filename}") 
+                print('Uploading files...')
+                print(f'Uploaded {filename}')
+                logger.info(f'Uploaded {filename}') 
                 
                 # Delete the local file ONLY if the line above succeeds
                 os.remove(full_path)
