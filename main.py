@@ -20,7 +20,7 @@ extract_logger = logging.getLogger('modules.extract')
 extract_logger.setLevel(logging.INFO)
 
 # Create the file handler for extract.py with dynamic log filename
-extract_handler = logging.FileHandler(f'logs/extract/{timestamp}_extract.log')
+extract_handler = logging.FileHandler(f'logs/extract/{timestamp}_extract.log', encoding='utf-8')
 extract_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 extract_logger.addHandler(extract_handler)
 
@@ -34,12 +34,13 @@ load_logger = logging.getLogger('modules.load')
 load_logger.setLevel(logging.INFO)
 
 # Create the file handler for load.py with dynamic log filename
-load_handler = logging.FileHandler(f'logs/load/{timestamp}_load.log')
+load_handler = logging.FileHandler(f'logs/load/{timestamp}_load.log', encoding='utf-8')
 load_handler.setFormatter(logging.Formatter('%(asctime)s - %(levelname)s - %(message)s'))
 load_logger.addHandler(load_handler)
 
 # Ensures load handler doesn't propagate to parent directories
 load_logger.propagate = False
+
 
 # Documentation here: https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll
 url = 'https://api.tfl.gov.uk//BikePoint'
@@ -56,4 +57,4 @@ AWS_BUCKET_NAME = os.getenv('AWS_BUCKET_NAME')
 extract.extract_function(url, 3, timestamp)
 
 # Read files from "data" folder, upload to S3 bucket and log
-load.load_function('data', AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME)
+load.load_function('extracted_data', AWS_ACCESS_KEY, AWS_SECRET_KEY, AWS_BUCKET_NAME)
