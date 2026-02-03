@@ -15,27 +15,45 @@
 <hr />
 
 <p>
-  This project was developed as part of <strong>The Information Lab's Data Engineering School</strong>. It implements a robust ELT (Extract, Load, Transform) pipeline to ingest real-time data from <a href="https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll">Transport for London's (TfL) Unified API</a> regarding Santander Cycles and store it securely in the cloud.
+  This project was developed as part of <strong>The Information Lab's Data Engineering School</strong>. It implements a robust ELT (Extract, Load, Transform) pipeline to ingest real-time data from <a href="https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll">Transport for London's (TfL) Unified API</a> relating to Santander Cycles and store it securely in the cloud.
 </p>
 
 <p>
-  The pipeline automates the retrieval of bike point data and uploads it to an <strong>AWS S3 bucket</strong> for future analysis or warehousing.
+  The pipeline automates the retrieval of BikePoint data and uploads it to an <strong>AWS S3 bucket</strong> using a python script. From here the data is ingested into <strong>Snowflake</strong> via Snowpipe where it is warehoused. <strong>dbt Platform</strong> is used to transform and model the warehoused data to make it analysis-ready.
 </p>
 
 <h2>🚀 Project Architecture</h2>
 
 <p>The pipeline consists of two main stages:</p>
 <ol>
-  <li><strong>Extract:</strong> A Python script queries the TfL API, handles connectivity errors with retries, and saves raw data locally.</li>
-  <li><strong>Load:</strong> A second script checks for local data, authenticates with AWS, uploads files to an S3 bucket, and cleans up local storage upon success.</li>
+  <li><strong>Extract & Load with Python 🐍 </strong>
+  <ul>
+    <li><code>main.py</code> - This python script orchestrates the extract & load process. It manages the runtime environment, environment variables, and triggers the sequence of events.</li>
+    <li><code>extract.py</code> - this python module script connects to the TfL API, handles connectivity errors with retries, and saves raw data locally.</li>
+    <li><code>load.py</code> -  this python module script checks for local data, authenticates with AWS, uploads files to an S3 bucket, and cleans up local storage upon success.</li>
+  </ul>
+
+  <li><strong>Warehousing - Snowflake ❄️:</strong>
+  <ul>
+    <li><i>Coming soon - loading to Snowflake...</i></li>
+  </ul>
+  <li><strong>Transform with dbt Plaform 🔶:</strong>
+  <ul>
+    <li><i>Coming soon - transformation with dbt...</i></li>
+  </ul>
 </ol>
 
 <h3>Tech Stack</h3>
 <ul>
   <li><strong>Language:</strong> Python 3.12</li>
-  <li><strong>Libraries:</strong> <code>requests</code>, <code>boto3</code>, <code>python-dotenv</code></li>
-  <li><strong>Cloud Services:</strong> AWS S3</li>
-  <li><strong>Logging:</strong> Python standard <code>logging</code> module</li>
+  <li><strong>Libraries:</strong>
+  <ul>
+    <li><code>requests</code> - for API calls</li>
+    <li><code>boto3</code> - for AWS S3 connection </li>
+    <li><code>python-dotenv</code> - for secret management</li>
+  </ul>
+  <li><strong>Logging:</strong> Dual-stream file logging for both Extract and Load phases.</li>
+  <li><strong>Cloud Services:</strong> AWS S3, Snowflake, dbt Platform</li>
 </ul>
 
 <hr />
@@ -43,11 +61,16 @@
 <h2>📂 Project Structure</h2>
 
 <pre>
-├── logs/                   # Generated automatically: Stores runtime logs
-├── data/                   # Generated automatically: Temporary staging for JSON files
-├── .env                    # Environment variables (AWS Credentials)
-├── bikepoint_api_call.py   # Script 1: Extracts data from TfL API
-├── load_bikepoints.py      # Script 2: Uploads data to AWS S3
+├── logs/                   
+│   ├── extract/            # Timestamped logs for API extraction
+│   └── load/               # Timestamped logs for S3 upload activity
+├── modules/                
+│   ├── extract.py          # Logic for TfL API interaction & retries
+│   └── load.py             # Logic for AWS S3 authentication & file transfer
+├── extracted_data/         # Temporary staging for raw .json files
+├── .env                    # Environment variables (Hidden/Secret)
+├── main.py                 # Primary entry point & pipeline orchestrator
+├── requirements.txt        # Project dependencies
 └── README.md
 </pre>
 
@@ -75,19 +98,33 @@ AWS_BUCKET_NAME=your_s3_bucket_name</code></pre>
 
 <h2>🏃 Usage</h2>
 
-<h3>Phase 1: Extraction</h3>
-<p>Run the extraction script to fetch the latest BikePoint data. This will create a timestamped JSON file in the <code>data/</code> directory and log the attempt in <code>logs/</code>.</p>
-<pre><code>python bikepoint_api_call.py</code></pre>
+<p>The entire pipeline is automated via the orchestrator script. Simply run:</p>
+
+<pre><code>python main.py</code></pre>
+
+<h3>Pipeline Features:</h3>
 <ul>
-  <li><strong>Features:</strong> Implements a retry mechanism (3 attempts) for 500-level server errors and logs success/failure with timestamps.</li>
+  <li><strong>Resilience:</strong> The <code>extract</code> module includes a retry loop that waits 10 seconds between attempts for 500-level errors.</li>
+  <li><strong>Atomic Uploads:</strong> The <code>load</code> module ensures files are only removed from the <code>extracted_data</code> folder once S3 confirms a successful write.</li>
+  <li><strong>Granular Logging:</strong> Each run generates distinct log files in <code>logs/extract/</code> and <code>logs/load/</code> named with the execution timestamp for easy auditing.</li>
+  <li><strong>Validation:</strong> The loader automatically filters for files, ensuring no system directories are accidentally uploaded to your S3 bucket.</li>
 </ul>
 
-<h3>Phase 2: Loading (S3 Upload)</h3>
-<p>Run the upload script to move the JSON files to AWS S3.</p>
-<pre><code>python load_bikepoints.py</code></pre>
+<hr />
+
+<h2>⚙️ Orchestration & Deployment</h2>
+
+<p>
+  This project is designed to be fully containerized and orchestrated for automated scheduling and monitoring. 
+</p>
+
 <ul>
-  <li><strong>Features:</strong> Scans the <code>data/</code> directory, uploads files to the bucket defined in your <code>.env</code>, and auto-deletes the local file <em>only</em> if the upload is successful.</li>
+  <li><strong>Containerization:</strong> The pipeline is compatible with <strong>Docker</strong>, ensuring a consistent environment for extraction and loading tasks across different infrastructure.</li>
+  <li><strong>Workflow Management:</strong> The repository supports orchestration via <strong>Kestra</strong>. This allows for visual flow management, automated execution retries, and real-time alerting.</li>
+  <li><strong>🔒 Security Note:</strong> To maintain project security, all <code>docker-compose.yml</code>, <code>.env</code>, and database configuration files have been added to <code>.gitignore</code>. This prevents the exposure of sensitive API keys, cloud credentials, and internal networking logic. </li>
 </ul>
+
+<hr />
 
 <h2>📄 License</h2>
 <p>This project is open source and available under the <a href="LICENSE">MIT License</a>.</p>
