@@ -24,7 +24,7 @@
 
 <h2>🚀 Project Architecture</h2>
 
-<p>The pipeline consists of two main stages:</p>
+<p>The pipeline consists of three stages:</p>
 <ol>
   <li><strong>Extract & Load with Python 🐍 </strong>
   <ul>
