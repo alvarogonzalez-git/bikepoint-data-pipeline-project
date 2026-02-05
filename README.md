@@ -5,22 +5,14 @@
     <img width="38%" alt="santander cycles logo" src="https://github.com/user-attachments/assets/564ded8a-68db-4b26-989d-97b9882f1fab" />
   </p>
 
-  <h1>BikePoint Data Pipeline</h1>
+  <h1>TfL BikePoint Data Pipeline</h1>
 
   <p>
-    <strong>A robust ELT pipeline ingesting data from Transport for London (TfL) and loading to AWS S3.</strong>
+    A robust <strong>ELT pipeline</strong> ingesting data from <a href="https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_Get">Transport for London's (TfL) BikePoint API</a> and loading to <strong>AWS S3</strong>. This data is warehoused in <strong>Snowflake</strong> and <strong>dbt Platform</strong> is used to transform and model the warehoused data to make it analysis-ready.
   </p>
 </div>
 
 <hr />
-
-<p>
-  This project was developed as part of <strong>The Information Lab's Data Engineering School</strong>. It implements a robust ELT (Extract, Load, Transform) pipeline to ingest real-time data from <a href="https://api.tfl.gov.uk/swagger/ui/#!/BikePoint/BikePoint_GetAll">Transport for London's (TfL) Unified API</a> relating to Santander Cycles and store it securely in the cloud.
-</p>
-
-<p>
-  The pipeline automates the retrieval of BikePoint data and uploads it to an <strong>AWS S3 bucket</strong> using a python script. From here the data is ingested into <strong>Snowflake</strong> via Snowpipe where it is warehoused. <strong>dbt Platform</strong> is used to transform and model the warehoused data to make it analysis-ready.
-</p>
 
 <h2>🚀 Project Architecture</h2>
 
@@ -42,6 +34,8 @@
     <li><i>Coming soon - transformation with dbt...</i></li>
   </ul>
 </ol>
+
+<hr>
 
 <h3>Tech Stack</h3>
 <ul>
